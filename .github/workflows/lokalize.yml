@@ -1,25 +1,37 @@
 name: Lokalize PR check
 on:
   pull_request:
-    branches:
-      - "main"
+    paths:
+      - "locale/*"
 jobs:
   autoapprove:
     runs-on: ubuntu-latest
     steps:
-      - id: file_changes
-        uses: trilom/file-changes-action@v1.2.3
-      - name: test
+      - uses: actions/checkout@v2
+      - name: yarn install
+        uses: borales/actions-yarn@v2.0.0
         with:
-          script: |
-            const files = steps.file_changes.outputs.files;
-            if (files.length > 2) {
-              throw new Error("More than 2 files were changed in this lokalize PR");
-            }
-            for(var i = 0, ii=files.length;i<ii;i++) {
-              const file = files[i];
-              if (file.indexOf('nl.json') < -1) && (file.indexOf('en.json') < -1) {
-                throw new Error("Only files en.json or nl.json are allowed to be updated");
-              }
-            }
-            throw new Error("I really wanna fail");
+          cmd: install
+      - name: locale validation
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: validate-locale
+      - name: Auto approve
+        uses: hmarr/auto-approve-action@v2.0.0 # Custom action for auto approval already available on marketplace
+        with:
+          # Create a personal access token and store it under the Secrets section of the particular repository
+          # with the key "GITHUB_ACTIONS_TOKEN"
+          github-token: ${{ github.token }}
+  automerge:
+    name: Auto merge after successful checks
+    # By default, jobs run in parallel. To run the jobs sequentially, they keywords "needs" is needed.
+    # Auto merge action can be done only when the PR is approved, hence this automerge needs autoapprove as a prerequisite
+    needs: autoapprove
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto merge
+        # Custom action for auto merging already available on marketplace
+        uses: pascalgn/automerge-action@v0.12.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MERGE_METHOD: squash

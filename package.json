@@ -1,0 +1,11 @@
+{
+  "name": "workflow-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/VWSCoronaDashboard1/workflow-test.git",
+  "author": "R <66416946+VWSCoronaDashboard1@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "validate-locale": "node tools/validate-locale"
+  }
+}
