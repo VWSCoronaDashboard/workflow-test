@@ -1,5 +1,5 @@
 const fs = require("fs");
-// const path = require("path");
+const path = require("path");
 
 const contents = fs.readdirSync(path.join("home", "runner", "files.json"));
 
