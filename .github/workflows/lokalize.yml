@@ -2,7 +2,7 @@ name: Lokalize PR check
 on:
   pull_request:
     branches:
-      - 'lokalize-*'
+      - "main"
 jobs:
   autoapprove:
     runs-on: ubuntu-latest
