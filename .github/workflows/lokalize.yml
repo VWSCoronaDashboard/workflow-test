@@ -23,6 +23,12 @@ jobs:
           # Create a personal access token and store it under the Secrets section of the particular repository
           # with the key "GITHUB_ACTIONS_TOKEN"
           github-token: ${{ github.token }}
+      - name: Add label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: startsWith(github.head_ref, 'lokalize-') == true
+        with:
+          github_token: ${{ github.token }}
+          labels: lokalise
   automerge:
     name: Auto merge after successful checks
     # By default, jobs run in parallel. To run the jobs sequentially, they keywords "needs" is needed.
@@ -35,4 +41,5 @@ jobs:
         uses: pascalgn/automerge-action@v0.12.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          MERGE_LABELS: lokalise
           MERGE_METHOD: squash
