@@ -18,7 +18,7 @@ jobs:
           cmd: validate-locale
       - name: Add label
         uses: actions-ecosystem/action-add-labels@v1
-        if: github.actor == 'VWSCoronaDashboard1' && startsWith(github.head_ref, 'lokalize-') == true
+        if: github.actor == 'VWSCoronaDashboard1' && startsWith(github.head_ref, 'lokalise-') == true
         with:
           github_token: ${{ github.token }}
           labels: lokalise
