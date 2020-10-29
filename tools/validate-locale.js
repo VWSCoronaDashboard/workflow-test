@@ -1,15 +1,11 @@
 const fs = require("fs");
 // const path = require("path");
 
-console.dir(fs.readdirSync(process.env.HOME));
+const contents = fs.readdirSync(path.join("home", "runner", "files.json"));
 
-/*const contents = fs.readdirSync(path.join(process.env.HOME, "files.json"));
+console.dir(contents);
 
-console.dir(contents);*/
-
-/*
-
-const filechanges = JSON.parse(fs.readFileSync("../files.json"));
+/*const filechanges = JSON.parse(fs.readFileSync("../files.json"));
 
 filechanges.forEach((name) => {
   if (name.indexOf("nl.json") < -1 && name.indexOf("en.json") < -1) {
