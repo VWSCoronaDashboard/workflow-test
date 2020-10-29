@@ -4,7 +4,7 @@ on:
     paths:
       - "locale/*"
 jobs:
-  autoapprove:
+  autocheckandapprove:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,28 +16,25 @@ jobs:
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: validate-locale
-      - name: Auto approve
-        uses: hmarr/auto-approve-action@v2.0.0 # Custom action for auto approval already available on marketplace
-        if: startsWith(github.head_ref, 'lokalize-') == true
-        with:
-          # Create a personal access token and store it under the Secrets section of the particular repository
-          # with the key "GITHUB_ACTIONS_TOKEN"
-          github-token: ${{ github.token }}
       - name: Add label
         uses: actions-ecosystem/action-add-labels@v1
         if: startsWith(github.head_ref, 'lokalize-') == true
         with:
           github_token: ${{ github.token }}
           labels: lokalise
+      - name: Auto approve
+        uses: hmarr/auto-approve-action@v2.0.0
+        if: startsWith(github.head_ref, 'lokalise-') == true
+        with:
+          github-token: ${{ github.token }}
   automerge:
     name: Auto merge after successful checks
     # By default, jobs run in parallel. To run the jobs sequentially, they keywords "needs" is needed.
-    # Auto merge action can be done only when the PR is approved, hence this automerge needs autoapprove as a prerequisite
-    needs: autoapprove
+    # Auto merge action can be done only when the PR is approved, hence this automerge needs autocheckandapprove as a prerequisite
+    needs: autocheckandapprove
     runs-on: ubuntu-latest
     steps:
       - name: Auto merge
-        # Custom action for auto merging already available on marketplace
         uses: pascalgn/automerge-action@v0.12.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
