@@ -16,6 +16,12 @@ jobs:
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: validate-locale
+      - name: Auto approve
+        uses: hmarr/auto-approve-action@v2.0.0 # Custom action for auto approval already available on marketplace
+        with:
+          # Create a personal access token and store it under the Secrets section of the particular repository
+          # with the key "GITHUB_ACTIONS_TOKEN"
+          github-token: ${{ github.token }}
   automerge:
     name: Auto merge after successful checks
     # By default, jobs run in parallel. To run the jobs sequentially, they keywords "needs" is needed.
