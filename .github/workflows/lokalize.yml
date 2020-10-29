@@ -7,10 +7,6 @@ jobs:
   autocheckandapprove:
     runs-on: ubuntu-latest
     steps:
-      - name: initialCheck
-        if: github.actor != 'VWSCoronaDashboard1' || startsWith(github.head_ref, 'lokalise-') == false
-        run: |
-          exit 0
       - uses: actions/checkout@v2
       - name: yarn install
         uses: borales/actions-yarn@v2.0.0
@@ -22,11 +18,13 @@ jobs:
           cmd: validate-locale
       - name: Add label
         uses: actions-ecosystem/action-add-labels@v1
+        if: github.actor == 'VWSCoronaDashboard1' && startsWith(github.head_ref, 'lokalise-') == true
         with:
           github_token: ${{ github.token }}
           labels: lokalise
       - name: Auto approve
         uses: hmarr/auto-approve-action@v2.0.0
+        if: github.actor == 'VWSCoronaDashboard1' && startsWith(github.head_ref, 'lokalise-') == true
         with:
           github-token: ${{ github.token }}
   automerge:
