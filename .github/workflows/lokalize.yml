@@ -10,4 +10,9 @@ jobs:
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.3
       - name: test
-        run: cat $HOME/files.json
+        with:
+          script: |
+            if steps.file_changes.outputs.files.length !== 2 {
+              throw new Error("More than 2 files were changed in this lokalize PR");
+            }
+            throw new Error("I really wanna fail");
