@@ -12,7 +12,14 @@ jobs:
       - name: test
         with:
           script: |
-            if steps.file_changes.outputs.files.length !== 2 {
+            const files = steps.file_changes.outputs.files;
+            if (files.length > 2) {
               throw new Error("More than 2 files were changed in this lokalize PR");
+            }
+            for(var i = 0, ii=files.length;i<ii;i++) {
+              const file = files[i];
+              if (file.indexOf('nl.json') < -1) && (file.indexOf('en.json') < -1) {
+                throw new Error("Only files en.json or nl.json are allowed to be updated");
+              }
             }
             throw new Error("I really wanna fail");
