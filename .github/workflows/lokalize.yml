@@ -9,7 +9,8 @@ jobs:
     steps:
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.3
-      - name: test
+      - name: test_file_changes
+        uses: actions/github-script@v3
         with:
           script: |
             const files = steps.file_changes.outputs.files;
