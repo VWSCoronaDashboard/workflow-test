@@ -19,7 +19,7 @@ jobs:
             }
             for(var i = 0, ii=files.length;i<ii;i++) {
               const file = files[i];
-              if file.indexOf('nl.json') < -1 && file.indexOf('en.json') < -1 {
+              if (file.indexOf('nl.json') < -1 && file.indexOf('en.json') < -1) {
                 throw new Error("Only files en.json or nl.json are allowed to be updated");
               }
             }
