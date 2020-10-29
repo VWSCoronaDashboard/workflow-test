@@ -10,17 +10,9 @@ jobs:
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.3
       - name: test_file_changes
-        uses: actions/github-script@v3
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          script: |
-            const files = github.steps.file_changes.outputs.files;
-            if (files.length > 2) {
-              throw new Error("More than 2 files were changed in this lokalize PR");
-            }
-            for(var i = 0, ii=files.length;i<ii;i++) {
-              const file = files[i];
-              if (file.indexOf('nl.json') < -1 && file.indexOf('en.json') < -1) {
-                throw new Error("Only files en.json or nl.json are allowed to be updated");
-              }
-            }
-            throw new Error("I really wanna fail");
+          cmd: install
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: validate-locale
