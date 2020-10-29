@@ -13,7 +13,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-            const files = steps.file_changes.outputs.files;
+            const files = github.steps.file_changes.outputs.files;
             if (files.length > 2) {
               throw new Error("More than 2 files were changed in this lokalize PR");
             }
