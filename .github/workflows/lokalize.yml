@@ -12,7 +12,7 @@ jobs:
         uses: trilom/file-changes-action@v1.2.3
       - name: output
         run: |
-          echo '${{ $HOME }}'
+          echo $HOME
           cat $HOME/files.json
       - name: yarn install
         uses: borales/actions-yarn@v2.0.0
