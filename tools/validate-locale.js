@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const contents = fs.readdirSync("./");
 
-console.dir(contents);
+console.dir(process.env);
 
 /*
 
