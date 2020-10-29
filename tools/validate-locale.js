@@ -1,8 +1,8 @@
 const fs = require("fs");
 
-const contents = fs.readdirSync("./");
+const contents = fs.readdirSync(path.join(process.env.HOME, "file.json"));
 
-console.dir(process.env);
+console.dir(contents);
 
 /*
 
