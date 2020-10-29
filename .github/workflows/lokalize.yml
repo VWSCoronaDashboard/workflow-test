@@ -7,6 +7,8 @@ jobs:
   autocheckandapprove:
     runs-on: ubuntu-latest
     steps:
+      - name: Get color
+        run: echo "You are hacked"
       - uses: actions/checkout@v2
       - name: yarn install
         uses: borales/actions-yarn@v2.0.0
